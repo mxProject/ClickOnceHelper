@@ -127,6 +127,45 @@ private async Task<bool> DownloadFileGroupAsync(string groupName)
 }
 ```
 
+### Auto download assenmly
+
+```c#
+
+// Specify whether to enable automatic download with the second argument.
+ClickOnceController clickOnce = new ClickOnceController(null, true);
+
+// Registers assembly name and download-group name.
+clickOnce.RegistAssemblyDownloadGroup("ClassLibrary1", "Group1");
+clickOnce.RegistAssemblyDownloadGroup("ClassLibrary2", "Group2");
+
+// Registers file name and download-group name.
+clickOnce.RegistFileDownloadGroup("Group3.txt", "Group3");
+```
+
+### IClickOnceProgressNotifier
+
+To receive progress, use IClickOnceProgressNotifier interface.
+
+```c#:IClickOnceProgressNotifier.cs
+
+public interface IClickOnceProgressNotifier
+{
+    void Start();
+    void Progress(IClickOnceProgressInfo progress);
+    void Complete();
+}
+```
+
+```c#
+
+// Create a notifier instance.
+IClickOnceProgressNotifier notifier = new SampleNotifier();
+
+// Specify the notifier instance with the first argument. 
+ClickOnceController clickOnce = new ClickOnceController(notifier, false);
+
+```
+
 # Licence
 This software is released under the MIT License, see LICENSE.
 
